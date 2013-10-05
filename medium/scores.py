@@ -9,8 +9,10 @@ for line in lines:
         teams[line[0]] = []
     if line[2] not in teams:
         teams[line[2]] = []
-    teams[line[0]].append('w/' + line[1] + '/' + line[3])
-    teams[line[2]].append('l/' + line[3] + '/' + line[1])
+    hteamwin = 'w' if int(line[1]) > int(line[3]) else 'l'
+    ateamwin = 'w' if int(line[1]) < int(line[3]) else 'l'
+    teams[line[0]].append(hteamwin + '/' + line[1] + '/' + line[3])
+    teams[line[2]].append(ateamwin + '/' + line[1] + '/' + line[3])
     scores[line[0]] = {'hscore': int(line[1]), 'other': line[2], 'lscore': int(line[3])}
 
 rdiff = {x:0 for x in scores.keys()}
@@ -27,10 +29,6 @@ for x in winp.values():
     total = x['win'] + x['lose']
     wins.append(float(x['win'])/total)
 
-print('best dif: %s' % max(rdiff.values()))
-print('worst dif: %s' % min(rdiff.values()))
-print('best winp: %0.5f' % max(wins))
-print('worst winp: %0.5f' % min(wins))
 
 fteams = {}
 for i in teams.keys():
@@ -45,9 +43,10 @@ for i in teams.keys():
             rs += int(k[1])
             ra += int(k[2])
         else:
+            print(k)
             losses += 1
-            rs += int(k[2])
-            ra += int(k[1])
+            rs += int(k[1])
+            ra += int(k[2])
     fteams[i] = [wins, losses, rs, ra]
 for i in fteams:
-    print(i + str(float(fteams[i][0]) / fteams[i][1]) + ' ' + str(float(fteams[i][2]) / fteams[i][3]))
+    print(str(float(fteams[i][0] / fteams[i][1])))

@@ -43,7 +43,7 @@ for i in teams.keys():
             rs += int(k[1])
             ra += int(k[2])
         else:
-            print(k)
+            # print(k)
             losses += 1
             rs += int(k[1])
             ra += int(k[2])
